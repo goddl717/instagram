@@ -1,17 +1,17 @@
 package hyh.insutagram.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Builder
-@Setter
 @Getter
+@AllArgsConstructor
 public class Post {
+    public Post(){};
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

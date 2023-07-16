@@ -2,18 +2,17 @@ package hyh.insutagram.dto;
 
 import hyh.insutagram.entity.Member;
 import hyh.insutagram.entity.Post;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
-public class ResponsePostDto {
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+public class RequestPostDto {
+    // 얘는 필요 없지 않나?
     private Long id;
     private String title;
     private String contents;
@@ -31,4 +30,7 @@ public class ResponsePostDto {
                 .updateTime(post.getUpdateTime())
                 .build();
     }
+
+
 }
+

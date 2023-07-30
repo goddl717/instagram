@@ -13,7 +13,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class PostService {
-    PostRepository postRepository;
+
+    // TODO private final 이유
+    private final PostRepository postRepository;
 
     public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
@@ -24,10 +26,11 @@ public class PostService {
         return posts.stream().map(ResponsePostDto::of).collect(Collectors.toList());
     }
 
+    // ToDO get 처리 방안
+    // 함수형 프로그래밍 자바8 function, supplier
     public ResponsePostDto selectById(Long id) {
         Optional<Post> post = postRepository.findById(id);
-
-        return Post.toDTO(post.get());
+        return ResponsePostDto.of(post.get());
     }
 
     public ResponsePostDto insert(RequestPostDto postdto) {
@@ -40,20 +43,22 @@ public class PostService {
         return ResponsePostDto.of(post);
     }
 
+    //TODO jpa 트랜잭션 지원
     public ResponsePostDto update(RequestPostDto dto) {
-        Optional<Post> postOpt = postRepository.findById(dto.getId());
-        if (postOpt.isPresent()) {
-            Post post = Post.builder()
-                    .id(postOpt.get().getId())
-                    .title(dto.getTitle())
-                    .updateTime(dto.getUpdateTime())
-                    .member(dto.getMember())
-                    .registerTime(dto.getRegisterTime())
-                    .updateTime(dto.getUpdateTime())
-                    .build();
-            postRepository.save(post);
-            return ResponsePostDto.of(post);
-        } else
-            throw new NoSuchElementException("jhgjghgj");
+        Post postOpt = postRepository.findById(dto.getId())
+                .orElseThrow(() -> new NoSuchElementException("jhgjghgj"));
+        // TODO 멤버에 대한 예외 처리 로직도 추가.
+        Post post = Post.builder()
+                .id(postOpt.getId())
+                .title(dto.getTitle())
+                .updateTime(dto.getUpdateTime())
+                .member(dto.getMember())
+                .registerTime(dto.getRegisterTime())
+                .updateTime(dto.getUpdateTime())
+                .build();
+
+        postOpt.update(post);
+        postRepository.save(post);
+        return ResponsePostDto.of(post);
     }
 }

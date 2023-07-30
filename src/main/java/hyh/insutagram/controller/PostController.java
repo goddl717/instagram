@@ -18,7 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
-
+    // TODO /POST 공통화
+    // rest Api
     @GetMapping("/posts")
     public List<ResponsePostDto> selectAll() {
         return postService.selectAll();
@@ -35,7 +36,7 @@ public class PostController {
     }
 
     @PutMapping("/post")
-    //반환차입.
+    // TODO 반환 타입 + 에러공통처리.
     public ResponsePostDto update(@RequestBody RequestPostDto dto) {
         return postService.update(dto);
     }

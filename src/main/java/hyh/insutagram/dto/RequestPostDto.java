@@ -12,7 +12,8 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class RequestPostDto {
-    // 얘는 필요 없지 않나?
+
+    // TODO  DTO단에서의 entity 처리   ?? 무슨말인지 분석 필요
     private Long id;
     private String title;
     private String contents;
@@ -20,6 +21,7 @@ public class RequestPostDto {
     private LocalDate registerTime;
     private LocalDate updateTime;
 
+    // ToDO 변환 함수 위치 ?? 여기에서 필요없다는 뜻같음.
     public static ResponsePostDto of(Post post) {
         return ResponsePostDto.builder()
                 .id(post.getId())

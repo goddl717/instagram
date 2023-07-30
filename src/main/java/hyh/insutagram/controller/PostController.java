@@ -24,7 +24,6 @@ public class PostController {
     public List<ResponsePostDto> selectAll() {
         return postService.selectAll();
     }
-
     @GetMapping("/post")
     public ResponsePostDto selectById(@RequestParam Long id) {
         return postService.selectById(id);

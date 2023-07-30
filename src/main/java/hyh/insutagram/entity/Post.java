@@ -28,6 +28,24 @@ public class Post {
 
     // TODO set 대신 변환함수로 처리
     public void update(Post post) {
+        this.id = post.getId();
+        this.title = post.getTitle();
+        this.contents = post.getContents();
+        this.member = post.getMember();
+        this.registerTime = post.getRegisterTime();
+        this.updateTime = post.getUpdateTime();
 
     }
+    public static ResponsePostDto of(Post post) {
+        return ResponsePostDto.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .contents(post.getContents())
+                .responseMemberDto( Member.of(post.getMember()))
+                .registerTime(post.getRegisterTime())
+                .updateTime(post.getUpdateTime())
+                .build();
+    }
+
+    // static factory method
 }

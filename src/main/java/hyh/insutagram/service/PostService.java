@@ -23,14 +23,14 @@ public class PostService {
 
     public List<ResponsePostDto> selectAll() {
         List<Post> posts = postRepository.findAll();
-        return posts.stream().map(ResponsePostDto::of).collect(Collectors.toList());
+        return posts.stream().map(Post::of).collect(Collectors.toList());
     }
 
     // ToDO get 처리 방안
     // 함수형 프로그래밍 자바8 function, supplier
     public ResponsePostDto selectById(Long id) {
         Optional<Post> post = postRepository.findById(id);
-        return ResponsePostDto.of(post.get());
+        return Post.of(post.get());
     }
 
     public ResponsePostDto insert(RequestPostDto postdto) {
@@ -40,13 +40,13 @@ public class PostService {
                 .registerTime(postdto.getRegisterTime())
                 .contents(postdto.getContents()).build();
         postRepository.save(post);
-        return ResponsePostDto.of(post);
+        return Post.of(post);
     }
 
     //TODO jpa 트랜잭션 지원
     public ResponsePostDto update(RequestPostDto dto) {
         Post postOpt = postRepository.findById(dto.getId())
-                .orElseThrow(() -> new NoSuchElementException("jhgjghgj"));
+                .orElseThrow(() -> new NoSuchElementException(""));
         // TODO 멤버에 대한 예외 처리 로직도 추가.
         Post post = Post.builder()
                 .id(postOpt.getId())
@@ -56,9 +56,9 @@ public class PostService {
                 .registerTime(dto.getRegisterTime())
                 .updateTime(dto.getUpdateTime())
                 .build();
-
+        // TO do 굳이 해야하나 ?
         postOpt.update(post);
         postRepository.save(post);
-        return ResponsePostDto.of(post);
+        return Post.of(post);
     }
 }

@@ -21,10 +21,10 @@ public class MemberService {
     }
 
     public List<ResponseMemberDto> selectAll(){
-        return memberRepositry.findAll().stream().map(Member::of).collect(Collectors.toList());
+        return memberRepositry.findAll().stream().map(ResponseMemberDto::of).collect(Collectors.toList());
     }
     public ResponseMemberDto selectById(Long id){
-        return Member.of(memberRepositry.findById(id).get()) ;
+        return ResponseMemberDto.of(memberRepositry.findById(id).get()) ;
     }
     public ResponseMemberDto insert(RequestMemberDto dto){
         Member member = Member.builder().id(dto.getId())
@@ -32,7 +32,7 @@ public class MemberService {
                 .registerTime(dto.getRegisterTime())
                 .delFlag(dto.getDelFlag()).build();
         memberRepositry.save(member);
-        return Member.of(member);
+        return ResponseMemberDto.of(member);
     }
 
     public ResponseMemberDto update(RequestMemberDto dto){
@@ -44,13 +44,13 @@ public class MemberService {
                 .registerTime(dto.getRegisterTime())
                 .delFlag(dto.getDelFlag()).build();
         memberRepositry.save(after);
-        return Member.of(after);
+        return ResponseMemberDto.of(after);
     }
     public ResponseMemberDto delete(RequestMemberDto dto)
     {
         Member before = memberRepositry.findById(dto.getId())
-                .orElseThrow(()->new NoSuchElementException("no data"));
+                .orElseThrow(()->new NoSuchElementException("[delete error] : no such member"));
         memberRepositry.delete(before);
-        return Member.of(before);
+        return ResponseMemberDto.of(before);
     }
 }

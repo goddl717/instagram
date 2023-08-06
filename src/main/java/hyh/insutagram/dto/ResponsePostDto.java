@@ -13,12 +13,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-// TODO DTO 단에서의 entity 처리
+// TODO (진행 중) DTO 단에서의 entity 처리로 변환해야함.
 public class ResponsePostDto {
     private Long id;
     private String title;
     private String contents;
-    // todo DTO 단에서는 DTO 변수를 써야한다.
+    // todo DTO 단에서는 DTO 변수를 써야한다. test
     private ResponseMemberDto responseMemberDto;
     private LocalDate registerTime;
     private LocalDate updateTime;
